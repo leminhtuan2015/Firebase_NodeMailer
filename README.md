@@ -1,9 +1,9 @@
-# Firebase Cloud Functions + Node Mailer
-# Firebase Cloud Functions + Algolia = full text search on firebase database
+## Firebase Cloud Functions + Node Mailer
+## Firebase Cloud Functions + Algolia = full text search on firebase database
 
 -----------------------------------------------------------------
 
-# Firebase Cloud Functions + Node Mailer
+## Firebase Cloud Functions + Node Mailer
 
 * Firebase Functions
 * Node Mailer : https://nodemailer.com/about/
@@ -47,7 +47,7 @@ npm install algoliasearch --save
 
   * https://us-central1-[Project-ID].cloudfunctions.net/sendMail
   
-# Firebase Cloud Functions + Algolia = full text search on firebase database
+## Firebase Cloud Functions + Algolia = full text search on firebase database
 
 ### Setting up the sample
 
