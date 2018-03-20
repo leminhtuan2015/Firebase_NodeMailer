@@ -1,4 +1,9 @@
 # Firebase Cloud Functions + Node Mailer
+# Firebase Cloud Functions + Algolia = full text search on firebase database
+
+-----------------------------------------------------------------
+
+# Firebase Cloud Functions + Node Mailer
 
 * Firebase Functions
 * Node Mailer : https://nodemailer.com/about/
