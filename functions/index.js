@@ -39,9 +39,9 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 exports.sendMail = functions.https.onRequest((request, response) => {
-    let toEmailAddress = request.query.toEmailAddress
-    let emailSubject = request.query.emailSubject
-    let emailHtmlContent = request.query.emailHtmlContent
+    let toEmailAddress = request.body.toEmailAddress
+    let emailSubject = request.body.emailSubject
+    let emailHtmlContent = request.body.emailHtmlContent
 
     console.log("sendMail options => toEmailAddress: " + toEmailAddress + " emailSubject : " + emailSubject + " emailHtmlContent :" + emailHtmlContent)
 
