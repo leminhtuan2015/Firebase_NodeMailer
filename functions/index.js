@@ -12,14 +12,14 @@ const mailTransport = nodemailer.createTransport({
 });
 
 
-function sendEmail() {
+function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
 
     let mailOptions = {
-        from: 'tuanlm258@gmail.com',
-        to: 'leminhtuan2015@gmail.com',
-        subject: 'Invite Email',
+        from: functions.config().gmail.email,
+        to: toEmailAddress ? toEmailAddress :'leminhtuan2015@gmail.com',
+        subject: emailSubject? emailSubject : 'Invite Email',
         text: 'Hello world',
-        html: '<b>Hello world?</b>'
+        html: emailHtmlContent ? emailHtmlContent : '<b>Hello world?</b>'
     };
 
     console.log("mailTransport starting")
@@ -39,7 +39,13 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 exports.sendMail = functions.https.onRequest((request, response) => {
-    sendEmail()
+    let toEmailAddress = request.query.toEmailAddress
+    let emailSubject = request.query.emailSubject
+    let emailHtmlContent = request.query.emailHtmlContent
+
+    console.log("sendMail options => toEmailAddress: " + toEmailAddress + " emailSubject : " + emailSubject + " emailHtmlContent :" + emailHtmlContent)
+
+    sendEmail(toEmailAddress, emailSubject, emailHtmlContent)
 
     response.send("Sent Email");
 });
