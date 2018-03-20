@@ -26,3 +26,9 @@
 
   * Deploy your project using `firebase deploy`
   * Open the app using `firebase open hosting:site`, this will open a browser.
+
+### Run
+
+* Open link in browser:
+
+  * https://us-central1-[Project-ID].cloudfunctions.net/sendMail
