@@ -78,7 +78,7 @@ exports.indexentry = functions.database.ref('/users/{userId}/name').onWrite((eve
 });
 
 exports.search = functions.https.onRequest((request, response) => {
-    let query = request.params.query
+    let query = request.query.query
     search(query)
 
     response.send("Searching");
