@@ -1,6 +1,10 @@
 const functions = require('firebase-functions');
-const nodemailer = require('nodemailer');
+const admin = require('firebase-admin');
 
+const nodemailer = require('nodemailer');
+const algoliasearch = require('algoliasearch');
+
+//------------------------- EMAIL CONFIG
 const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport({
@@ -10,6 +14,19 @@ const mailTransport = nodemailer.createTransport({
         pass: gmailPassword,
     },
 });
+//------------------------- END EMAIL CONFIG
+
+
+//------------------------- ALGOLIA SEARCH CONFIG
+const ALGOLIA_ID = functions.config().algolia.app_id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
+const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
+
+const ALGOLIA_INDEX_NAME = 'users';
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+const index = client.initIndex(ALGOLIA_INDEX_NAME);
+
+//------------------------- END ALGOLIA SEARCH CONFIG
 
 
 function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
@@ -32,6 +49,20 @@ function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
         }
     });
 }
+
+
+//------------------------------------------EXPORT
+
+exports.indexentry = functions.database.ref('/users/{userId}/name').onWrite((event) => {
+    const firebaseObject = {
+        text: event.data.val(),
+        objectID: event.params.userId,
+    };
+
+    return index.saveObject(firebaseObject).then(
+        () => event.data.adminRef.parent.child('last_index_timestamp').set(
+            Date.parse(event.timestamp)));
+});
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");

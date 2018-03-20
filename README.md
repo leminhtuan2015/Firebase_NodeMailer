@@ -2,9 +2,18 @@
 
 * Firebase Functions
 * Node Mailer : https://nodemailer.com/about/
+* Algolia - search : https://github.com/algolia/algoliasearch-client-javascript
+
+```js
+npm install nodemailer --save
+
+npm install algoliasearch --save
+
+```
+   
 
 
-## Setting up the sample
+### Setting up the sample
 
 * Create a Firebase Project using the [Firebase Console](https://console.firebase.google.com).
 * You must have the Firebase CLI installed. If you don't have it install it with `npm install -g firebase-tools` and then configure it with `firebase login`.
@@ -20,7 +29,7 @@
     firebase functions:config:set gmail.email="myusername@gmail.com" gmail.password="secretpassword"
     ```
 
-## Deploy and test
+### Deploy and test
 
 * This sample comes with a web-based UI for testing the function. To test it out:
 
@@ -32,3 +41,19 @@
 * Open link in browser:
 
   * https://us-central1-[Project-ID].cloudfunctions.net/sendMail
+  
+# Firebase Cloud Functions + Algolia = full text search on firebase database
+
+### Setting up the sample
+
+* Create an Algolia account at www.algolia.com.
+
+* Set the algolia.app_id and algolia.api_key Google Cloud environment variables to match the Algolia application ID and API key of your account. For this use:
+
+
+```bash
+
+firebase functions:config:set algolia.app_id="myAlgoliaAppId" algolia.api_key="myAlgoliaApiKey"
+
+```
+
