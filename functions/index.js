@@ -55,7 +55,10 @@ function search(query = 'Some text') {
         // Response from Algolia:
         // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
         console.log(responses.hits);
-    });
+        return responses.hits
+    }).catch((error) => {
+        console.log("search error" + JSON.stringify(search));
+    })
 }
 
 
