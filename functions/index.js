@@ -54,7 +54,9 @@ function search(query = 'Some text') {
     index.search({query}).then(responses => {
         // Response from Algolia:
         // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
+        console.log("search responses : " + JSON.stringify(responses));
         console.log(responses.hits);
+
         return responses.hits
     }).catch((error) => {
         console.log("search error" + JSON.stringify(search));
