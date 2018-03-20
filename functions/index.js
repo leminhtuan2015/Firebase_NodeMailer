@@ -51,6 +51,8 @@ function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
 }
 
 function search(query = 'Some text') {
+    console.log("query : " + query)
+
     index.search({query}).then(responses => {
         // Response from Algolia:
         // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
@@ -79,10 +81,13 @@ exports.indexentry = functions.database.ref('/users/{userId}/name').onWrite((eve
 
 exports.search = functions.https.onRequest((request, response) => {
     let query = request.query.query
-    search(query)
+    let resutls = search(query)
 
-    response.send("Searching");
-
+    if(resutls){
+        response.send(JSON.stringify(resutls));
+    } else {
+        response.send("[]");
+    }
 });
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
