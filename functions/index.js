@@ -33,8 +33,8 @@ function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
 
     let mailOptions = {
         from: functions.config().gmail.email,
-        to: toEmailAddress ? toEmailAddress :'leminhtuan2015@gmail.com',
-        subject: emailSubject? emailSubject : 'Invite Email',
+        to: toEmailAddress ? toEmailAddress : 'leminhtuan2015@gmail.com',
+        subject: emailSubject ? emailSubject : 'Invite Email',
         text: 'Hello world',
         html: emailHtmlContent ? emailHtmlContent : '<b>Hello world?</b>'
     };
@@ -44,9 +44,17 @@ function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
     mailTransport.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log("mailTransport error")
-            
+
             return console.log(error);
         }
+    });
+}
+
+function search(query = 'Some text') {
+    index.search({query}).then(responses => {
+        // Response from Algolia:
+        // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
+        console.log(responses.hits);
     });
 }
 
@@ -62,6 +70,14 @@ exports.indexentry = functions.database.ref('/users/{userId}/name').onWrite((eve
     return index.saveObject(firebaseObject).then(
         () => event.data.adminRef.parent.child('last_index_timestamp').set(
             Date.parse(event.timestamp)));
+});
+
+exports.search = functions.https.onRequest((request, response) => {
+    let query = request.params.query
+    search(query)
+
+    response.send("Searching");
+
 });
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
