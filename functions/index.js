@@ -50,7 +50,7 @@ function sendEmail(toEmailAddress, emailSubject, emailHtmlContent) {
     });
 }
 
-function search(query = 'Some text') {
+function search(query = 'Some text', callback) {
     console.log("query : " + query)
 
     index.search({query}).then(responses => {
@@ -58,6 +58,8 @@ function search(query = 'Some text') {
         // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
         console.log("search responses : " + JSON.stringify(responses));
         console.log(responses.hits);
+
+        callback(responses.hits)
 
         return responses.hits
     }).catch((error) => {
@@ -81,13 +83,12 @@ exports.indexentry = functions.database.ref('/users/{userId}/name').onWrite((eve
 
 exports.search = functions.https.onRequest((request, response) => {
     let query = request.query.query
-    let resutls = search(query)
 
-    if(resutls){
+    search(query, (resutls) => {
+        console.log("search get results" + JSON.stringify(resutls));
         response.send(JSON.stringify(resutls));
-    } else {
-        response.send("[]");
-    }
+    })
+
 });
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
